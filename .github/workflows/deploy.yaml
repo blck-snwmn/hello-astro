@@ -1,4 +1,4 @@
-name: Hello
+name: Publish to Cloudflare Pages
 
 on:
   repository_dispatch:
