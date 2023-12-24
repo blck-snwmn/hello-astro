@@ -15,7 +15,12 @@ const response = await getBlogs({
 			{
 				response.contents.map((content: any) => (
 					<li>
-						<a href={content.id}>{content.title}</a>
+						<a
+							href={content.id}
+							class="underline text-blue-600 visited:text-purple-600"
+						>
+							{content.title}
+						</a>
 					</li>
 				))
 			}
