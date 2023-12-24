@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 
 //microCMS呼び出し
 import { getBlogs } from "../library/microcms";
+import { Header } from "../components/header.tsx";
+
 const response = await getBlogs({
 	draftKey: import.meta.env.DRAFT_KEY,
 	fields: ["id", "title"],
@@ -10,6 +12,7 @@ const response = await getBlogs({
 ---
 
 <Layout title="My first blog with Astro">
+	<Header />
 	<main>
 		<ul>
 			{
