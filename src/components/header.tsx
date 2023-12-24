@@ -1,8 +1,8 @@
 
 export const Header = () => {
     return (
-        <header>
-            <h1>Header</h1>
+        <header className="m-auto">
+            <h1 className="m-auto w-64 text-center">Header</h1>
         </header>
     );
 }
