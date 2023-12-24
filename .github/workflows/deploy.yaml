@@ -2,6 +2,9 @@ name: Publish to Cloudflare Pages
 
 on:
   repository_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   publish:
