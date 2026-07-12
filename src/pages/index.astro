@@ -1,11 +1,128 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { actions, isInputError } from 'astro:actions';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+export const prerender = false;
+
+const faqs = [
+	{ question: '営業時間を教えてください。', answer: '平日の10時から17時まで受け付けています。' },
+	{
+		question: '回答までどのくらいかかりますか？',
+		answer: '通常は2営業日以内に回答します。内容によってはお時間をいただく場合があります。',
+	},
+	{
+		question: '送信後に内容を変更できますか？',
+		answer: '送信後の変更はできません。内容を訂正して、あらためてお問い合わせください。',
+	},
+];
+
+const result = Astro.getActionResult(actions.sendInquiry);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="サポート | FAQ・お問い合わせ">
+	<header class="site-header">
+		<a href="/" class="site-name">サポート</a>
+		<span>FAQ・お問い合わせ</span>
+	</header>
+
+	<main>
+		<header class="page-header">
+			<h1>お困りですか？</h1>
+			<p>よくある質問をご確認いただくか、フォームからお問い合わせください。</p>
+		</header>
+
+		<div class="content-grid">
+			<section aria-labelledby="faq-heading">
+				<div class="section-heading"><h2 id="faq-heading">よくある質問</h2></div>
+				<div class="faq-list">
+					{faqs.map((faq) => (
+						<details>
+							<summary>{faq.question}</summary>
+							<p>{faq.answer}</p>
+						</details>
+					))}
+				</div>
+			</section>
+
+			<section aria-labelledby="inquiry-heading">
+				<div class="section-heading"><h2 id="inquiry-heading">お問い合わせ</h2></div>
+				{result?.data ? (
+					<div class="receipt" role="status">
+						<p class="receipt-title">お問い合わせを受け付けました。</p>
+						<dl>
+							<div><dt>受付ID</dt><dd class="receipt-id">{result.data.id}</dd></div>
+							<div><dt>お名前</dt><dd>{result.data.name}</dd></div>
+							<div><dt>件名</dt><dd>{result.data.subject}</dd></div>
+							<div><dt>お問い合わせ内容</dt><dd class="message">{result.data.message}</dd></div>
+						</dl>
+						<a href="/">戻る</a>
+					</div>
+				) : (
+					<form method="POST" action={actions.sendInquiry}>
+						{result?.error && !isInputError(result.error) && (
+							<p class="form-error" role="alert">送信できませんでした。もう一度お試しください。</p>
+						)}
+						<label>
+							<span>お名前</span>
+							<input name="name" type="text" required maxlength="50" autocomplete="name" />
+							{inputErrors.name && <small class="field-error">{inputErrors.name[0]}</small>}
+						</label>
+						<label>
+							<span>件名</span>
+							<input name="subject" type="text" required maxlength="100" />
+							{inputErrors.subject && <small class="field-error">{inputErrors.subject[0]}</small>}
+						</label>
+						<label>
+							<span>お問い合わせ内容</span>
+							<textarea name="message" required maxlength="1000" rows="7"></textarea>
+							{inputErrors.message && <small class="field-error">{inputErrors.message[0]}</small>}
+						</label>
+						<button type="submit">問い合わせる</button>
+					</form>
+				)}
+			</section>
+		</div>
+	</main>
 </Layout>
+
+<style>
+	.site-header { display: flex; align-items: baseline; gap: 1rem; max-width: 1120px; margin: 0 auto; padding: 1.25rem 2rem; border-bottom: 1px solid #dbe2ea; color: #657184; font-size: .875rem; }
+	.site-name { color: #172033; font-size: 1rem; font-weight: 700; text-decoration: none; }
+	main { max-width: 1120px; margin: 0 auto; padding: 4.5rem 2rem 6rem; }
+	.page-header { max-width: 680px; margin-bottom: 4rem; }
+	h1, h2, p { margin-top: 0; }
+	h1 { margin-bottom: 1rem; font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 650; letter-spacing: -.04em; line-height: 1.15; }
+	.page-header p { margin-bottom: 0; color: #526075; line-height: 1.8; }
+	.content-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, .8fr); gap: clamp(3rem, 8vw, 7rem); align-items: start; }
+	.section-heading { padding-bottom: .875rem; border-bottom: 2px solid #172033; }
+	h2 { margin-bottom: 0; font-size: 1.125rem; font-weight: 700; }
+	.faq-list details { border-bottom: 1px solid #dbe2ea; }
+	.faq-list summary { padding: 1.35rem 2rem 1.35rem 0; cursor: pointer; font-weight: 650; line-height: 1.6; }
+	.faq-list p { margin-bottom: 1.35rem; padding-right: 1rem; color: #526075; line-height: 1.8; }
+	form, .receipt { padding-top: 1.5rem; }
+	form { display: grid; gap: 1.25rem; }
+	label { display: grid; gap: .5rem; font-size: .875rem; font-weight: 650; }
+	input, textarea { box-sizing: border-box; width: 100%; border: 1px solid #aeb9c7; border-radius: 3px; background: #fff; color: #172033; padding: .75rem .8rem; font-size: 1rem; line-height: 1.5; }
+	textarea { resize: vertical; }
+	input:focus, textarea:focus, button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #9cc4f0; outline-offset: 2px; }
+	button { justify-self: start; border: 1px solid #183f6f; border-radius: 3px; background: #245b96; color: #fff; padding: .75rem 1.5rem; font-weight: 700; cursor: pointer; }
+	button:hover { background: #183f6f; }
+	.field-error, .form-error { color: #a12622; font-weight: 500; }
+	.form-error { margin-bottom: 0; }
+	.receipt-title { margin-bottom: 1.5rem; padding-left: .875rem; border-left: 4px solid #245b96; font-weight: 700; }
+	.receipt dl { margin: 0 0 1.5rem; border-top: 1px solid #dbe2ea; }
+	.receipt dl > div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid #dbe2ea; }
+	.receipt dt { color: #657184; font-size: .8125rem; }
+	.receipt dd { margin: 0; line-height: 1.6; }
+	.receipt-id { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: .8125rem; word-break: break-all; }
+	.message { white-space: pre-wrap; }
+	.receipt a { color: #245b96; text-underline-offset: .2em; }
+	@media (max-width: 760px) {
+		.site-header { padding-inline: 1.25rem; }
+		main { padding: 3rem 1.25rem 4rem; }
+		.page-header { margin-bottom: 3rem; }
+		.content-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+		.receipt dl > div { grid-template-columns: 1fr; gap: .3rem; }
+	}
+</style>
