@@ -1,8 +1,15 @@
-# Astro 7 FAQ sample
+# Astro 7 learning service help sample
 
-Astro 7のActionsとHonoによる高度なルーティングを使った、FAQ・お問い合わせフォームのサンプルです。
+Astro 7の主要機能を試す、オンライン学習サービスのヘルプセンターです。
 
-問い合わせはAstro Actionで検証し、インメモリに保存します。送信内容はサーバーログにも出力されます。
+- Content Collectionsで管理するFAQ
+- FAQ一覧・詳細ページのSSG
+- ReactクライアントアイランドによるFAQ検索
+- Astro Actionsを使ったSSR問い合わせフォーム
+- Honoによる高度なルーティング
+- ブラウザ標準のView Transitions
+
+問い合わせはインメモリに保存し、送信内容をサーバーログへ出力します。
 
 ## Development
 

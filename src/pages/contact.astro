@@ -1,0 +1,58 @@
+---
+import { actions, isInputError } from 'astro:actions';
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+const result = Astro.getActionResult(actions.sendInquiry);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+---
+
+<Layout title="お問い合わせ | 学習サービス ヘルプ">
+	<main class="page-shell contact-shell">
+		<p class="breadcrumb"><a href="/">FAQ</a> / お問い合わせ</p>
+		<header class="page-header">
+			<h1>お問い合わせ</h1>
+			<p>FAQで解決しない場合は、フォームからお問い合わせください。</p>
+		</header>
+
+		{result?.data ? (
+			<section class="receipt" aria-labelledby="receipt-heading" role="status">
+				<h2 id="receipt-heading" class="section-heading">受付内容</h2>
+				<p class="receipt-title">お問い合わせを受け付けました。</p>
+				<dl>
+					<div><dt>受付ID</dt><dd class="receipt-id">{result.data.id}</dd></div>
+					<div><dt>お名前</dt><dd>{result.data.name}</dd></div>
+					<div><dt>件名</dt><dd>{result.data.subject}</dd></div>
+					<div><dt>お問い合わせ内容</dt><dd class="message">{result.data.message}</dd></div>
+				</dl>
+				<a href="/contact" class="back-link">戻る</a>
+			</section>
+		) : (
+			<section aria-labelledby="form-heading">
+				<h2 id="form-heading" class="section-heading">入力内容</h2>
+				<form method="POST" action={actions.sendInquiry} class="contact-form">
+					{result?.error && !isInputError(result.error) && (
+						<p class="form-error" role="alert">送信できませんでした。もう一度お試しください。</p>
+					)}
+					<label>
+						<span>お名前</span>
+						<input name="name" type="text" required maxlength="50" autocomplete="name" />
+						{inputErrors.name && <small class="field-error">{inputErrors.name[0]}</small>}
+					</label>
+					<label>
+						<span>件名</span>
+						<input name="subject" type="text" required maxlength="100" />
+						{inputErrors.subject && <small class="field-error">{inputErrors.subject[0]}</small>}
+					</label>
+					<label>
+						<span>お問い合わせ内容</span>
+						<textarea name="message" required maxlength="1000" rows="7"></textarea>
+						{inputErrors.message && <small class="field-error">{inputErrors.message[0]}</small>}
+					</label>
+					<button type="submit" class="primary-button">問い合わせる</button>
+				</form>
+			</section>
+		)}
+	</main>
+</Layout>
