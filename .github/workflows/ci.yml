@@ -13,9 +13,9 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@537643d2d3489c83f4fddc3d8ab093885863e9d4 # v4.0.0
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
 
-      - uses: actions/setup-node@1e60f620b9541d399f7b940fac5d0022e6a4c317 # v6.0.0
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: package.json
           cache: pnpm
