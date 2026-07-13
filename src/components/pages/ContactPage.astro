@@ -1,0 +1,64 @@
+---
+import { actions, isInputError } from 'astro:actions';
+import Layout from '../../layouts/Layout.astro';
+import { ui, type Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = ui[locale];
+const result = Astro.getActionResult(actions.sendInquiry);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+---
+
+<Layout title={`${text.contact} | ${text.siteName}`} locale={locale}>
+	<main class="page-shell contact-shell">
+		<p class="breadcrumb"><a href={`/${locale}/`}>{text.faq}</a> / {text.contact}</p>
+		<header class="page-header">
+			<h1>{text.contact}</h1>
+			<p>{text.contactLead}</p>
+		</header>
+
+		{result?.data ? (
+			<section class="receipt" aria-labelledby="receipt-heading" role="status">
+				<h2 id="receipt-heading" class="section-heading">{text.receiptHeading}</h2>
+				<p class="receipt-title">{text.receiptTitle}</p>
+				<dl>
+					<div><dt>{text.receiptId}</dt><dd class="receipt-id">{result.data.id}</dd></div>
+					<div><dt>{text.name}</dt><dd>{result.data.name}</dd></div>
+					<div><dt>{text.subject}</dt><dd>{result.data.subject}</dd></div>
+					<div><dt>{text.message}</dt><dd class="message">{result.data.message}</dd></div>
+				</dl>
+				<a href={`/${locale}/contact`} class="back-link">{text.back}</a>
+			</section>
+		) : (
+			<section aria-labelledby="form-heading">
+				<h2 id="form-heading" class="section-heading">{text.formHeading}</h2>
+				<form method="POST" action={actions.sendInquiry} class="contact-form">
+					<input type="hidden" name="locale" value={locale} />
+					{result?.error && !isInputError(result.error) && (
+						<p class="form-error" role="alert">{text.sendError}</p>
+					)}
+					<label>
+						<span>{text.name}</span>
+						<input name="name" type="text" required maxlength="50" autocomplete="name" />
+						{inputErrors.name && <small class="field-error">{text.requiredError}</small>}
+					</label>
+					<label>
+						<span>{text.subject}</span>
+						<input name="subject" type="text" required maxlength="100" />
+						{inputErrors.subject && <small class="field-error">{text.requiredError}</small>}
+					</label>
+					<label>
+						<span>{text.message}</span>
+						<textarea name="message" required maxlength="1000" rows="7"></textarea>
+						{inputErrors.message && <small class="field-error">{text.requiredError}</small>}
+					</label>
+					<button type="submit" class="primary-button">{text.send}</button>
+				</form>
+			</section>
+		)}
+	</main>
+</Layout>

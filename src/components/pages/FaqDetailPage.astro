@@ -1,0 +1,34 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { ui, type Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+	entry: CollectionEntry<'faq'>;
+}
+
+const { locale, entry } = Astro.props;
+const text = ui[locale];
+const id = entry.id.replace(`${locale}/`, '');
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} | ${text.siteName}`} description={entry.data.summary} locale={locale}>
+	<main class="page-shell article-shell">
+		<p class="breadcrumb"><a href={`/${locale}/`}>{text.faq}</a> / {entry.data.title}</p>
+		<article>
+			<header class="article-header">
+				<span class="article-category">{entry.data.category}</span>
+				<h1 style={`view-transition-name: faq-${id}`}>{entry.data.title}</h1>
+				<p>{entry.data.summary}</p>
+			</header>
+			<div class="article-body">
+				<Content />
+			</div>
+			<footer class="article-footer">
+				<a href={`/${locale}/`} class="back-link">{text.backToFaq}</a>
+			</footer>
+		</article>
+	</main>
+</Layout>

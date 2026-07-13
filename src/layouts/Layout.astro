@@ -1,23 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	locale: import('../i18n').Locale;
+	description?: string;
+}
+
+import { ui } from '../i18n';
+
+const { title, locale, description = ui[locale].description } = Astro.props;
+const text = ui[locale];
+const pathname = Astro.url.pathname;
+const alternateLocale = locale === 'en' ? 'ja' : 'en';
+const alternatePath = pathname.replace(`/${locale}`, `/${alternateLocale}`);
+const faqPath = `/${locale}/`;
+const contactPath = `/${locale}/contact`;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
+		<header class="site-header">
+			<a href={faqPath} class="site-name">{text.siteName}</a>
+			<div class="header-links">
+				<nav class="site-nav" aria-label={text.mainNavigation}>
+					<a href={faqPath} aria-current={pathname === faqPath || pathname.startsWith(`/${locale}/faq/`) ? 'page' : undefined}>{text.faq}</a>
+					<a href={contactPath} aria-current={pathname === contactPath ? 'page' : undefined}>{text.contact}</a>
+				</nav>
+				<a class="language-link" href={alternatePath} lang={alternateLocale} hreflang={alternateLocale}>{alternateLocale === 'en' ? 'English' : '日本語'}</a>
+			</div>
+		</header>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

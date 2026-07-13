@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import FaqDetailPage from '../../../components/pages/FaqDetailPage.astro';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('faq', ({ data }) => data.locale === 'en');
+	return entries.map((entry) => ({ params: { id: entry.id.replace('en/', '') }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+
+<FaqDetailPage locale="en" entry={entry} />

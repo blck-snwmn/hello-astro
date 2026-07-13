@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import FaqSearch, { type FaqItem } from '../FaqSearch';
+import Layout from '../../layouts/Layout.astro';
+import { categories, ui, type Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = ui[locale];
+const entries = (await getCollection('faq', ({ data }) => data.locale === locale)).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+const faqs: FaqItem[] = entries.map((entry) => {
+	const id = entry.id.replace(`${locale}/`, '');
+	return {
+		id,
+		title: entry.data.title,
+		category: entry.data.category,
+		keywords: entry.data.keywords,
+		summary: entry.data.summary,
+		href: `/${locale}/faq/${id}`,
+	};
+});
+const labels = {
+	keyword: text.keyword,
+	searchPlaceholder: text.searchPlaceholder,
+	category: text.category,
+	all: text.all,
+	questionCountOne: text.questionCountOne,
+	questionCountOther: text.questionCountOther,
+	noResults: text.noResults,
+};
+---
+
+<Layout title={`${text.faq} | ${text.siteName}`} locale={locale}>
+	<main class="page-shell">
+		<header class="page-header">
+			<h1>{text.faqTitle}</h1>
+			<p>{text.faqLead}</p>
+		</header>
+
+		<section aria-labelledby="faq-heading">
+			<h2 id="faq-heading" class="section-heading">{text.findQuestion}</h2>
+			<FaqSearch faqs={faqs} categories={[...categories[locale]]} locale={locale} labels={labels} client:load />
+		</section>
+	</main>
+</Layout>
