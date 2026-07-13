@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 講座の修了条件を教えてください
 category: 学習履歴
 order: 9

@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: パスワードを忘れました
 category: アカウント
 order: 1

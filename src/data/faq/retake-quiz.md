@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 確認テストを再受験できますか
 category: 学習履歴
 order: 11

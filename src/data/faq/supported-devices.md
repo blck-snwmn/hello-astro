@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 複数の端末で受講できますか
 category: 動画再生
 order: 19

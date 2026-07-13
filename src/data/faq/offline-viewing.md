@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 動画をオフラインで視聴できますか
 category: 動画再生
 order: 20

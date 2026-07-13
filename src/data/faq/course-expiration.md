@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 講座に受講期限はありますか
 category: 講座
 order: 4

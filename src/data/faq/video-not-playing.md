@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 動画が再生されません
 category: 動画再生
 order: 16

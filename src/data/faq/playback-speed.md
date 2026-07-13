@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 動画の再生速度を変更できますか
 category: 動画再生
 order: 18

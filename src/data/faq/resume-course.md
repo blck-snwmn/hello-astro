@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 講座を途中から再開できますか
 category: 講座
 order: 5

@@ -17,6 +17,15 @@ export default defineConfig({
 
   integrations: [react()],
 
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: true
+    }
+  },
+
   vite: {
     optimizeDeps: {
       exclude: ['astro/actions/runtime/entrypoints/server.js']

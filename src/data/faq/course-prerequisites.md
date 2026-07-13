@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 受講前に必要な知識はありますか
 category: 講座
 order: 6

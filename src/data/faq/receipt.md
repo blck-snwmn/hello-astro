@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 領収書を発行できますか
 category: 料金・支払い
 order: 13

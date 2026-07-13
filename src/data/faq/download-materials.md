@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 講座の資料をダウンロードできますか
 category: 講座
 order: 7

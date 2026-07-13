@@ -12,14 +12,24 @@ export type FaqItem = {
 type Props = {
 	faqs: FaqItem[];
 	categories: string[];
+	locale: 'en' | 'ja';
+	labels: {
+		keyword: string;
+		searchPlaceholder: string;
+		category: string;
+		all: string;
+		questionCountOne: string;
+		questionCountOther: string;
+		noResults: string;
+	};
 };
 
-export default function FaqSearch({ faqs, categories }: Props) {
+export default function FaqSearch({ faqs, categories, locale, labels }: Props) {
 	const [query, setQuery] = useState('');
 	const [category, setCategory] = useState('');
 
 	const results = useMemo(() => {
-		const normalizedQuery = query.trim().toLocaleLowerCase('ja');
+		const normalizedQuery = query.trim().toLocaleLowerCase(locale);
 
 		return faqs.filter((faq) => {
 			if (category && faq.category !== category) return false;
@@ -27,7 +37,7 @@ export default function FaqSearch({ faqs, categories }: Props) {
 
 			return [faq.title, faq.summary, ...faq.keywords]
 				.join(' ')
-				.toLocaleLowerCase('ja')
+				.toLocaleLowerCase(locale)
 				.includes(normalizedQuery);
 		});
 	}, [category, faqs, query]);
@@ -36,18 +46,18 @@ export default function FaqSearch({ faqs, categories }: Props) {
 		<div className="faq-search">
 			<div className="search-controls">
 				<label>
-					<span>キーワード</span>
+					<span>{labels.keyword}</span>
 					<input
 						type="search"
 						value={query}
 						onChange={(event) => setQuery(event.target.value)}
-						placeholder="質問を検索"
+						placeholder={labels.searchPlaceholder}
 					/>
 				</label>
 				<label>
-					<span>カテゴリ</span>
+					<span>{labels.category}</span>
 					<select value={category} onChange={(event) => setCategory(event.target.value)}>
-						<option value="">すべて</option>
+						<option value="">{labels.all}</option>
 						{categories.map((item) => (
 							<option value={item} key={item}>{item}</option>
 						))}
@@ -55,7 +65,12 @@ export default function FaqSearch({ faqs, categories }: Props) {
 				</label>
 			</div>
 
-			<p className="result-count" aria-live="polite">{results.length}件の質問</p>
+			<p className="result-count" aria-live="polite">
+				{(results.length === 1 ? labels.questionCountOne : labels.questionCountOther).replace(
+					'{count}',
+					String(results.length),
+				)}
+			</p>
 
 			{results.length > 0 ? (
 				<ul className="faq-index">
@@ -70,7 +85,7 @@ export default function FaqSearch({ faqs, categories }: Props) {
 					))}
 				</ul>
 			) : (
-				<p className="empty-result">条件に一致する質問はありません。</p>
+				<p className="empty-result">{labels.noResults}</p>
 			)}
 		</div>
 	);

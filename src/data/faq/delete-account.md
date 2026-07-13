@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: アカウントを削除できますか
 category: アカウント
 order: 3

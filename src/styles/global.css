@@ -59,7 +59,7 @@ a {
 
 .site-header {
 	display: flex;
-	align-items: baseline;
+	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
 	max-width: 1120px;
@@ -71,6 +71,7 @@ a {
 .site-name {
 	color: var(--ink);
 	font-weight: 700;
+	line-height: 1.5rem;
 	text-decoration: none;
 }
 
@@ -78,6 +79,20 @@ a {
 	display: flex;
 	gap: 1.5rem;
 	font-size: 0.875rem;
+	line-height: 1.5rem;
+}
+
+.header-links {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.language-link {
+	color: var(--accent);
+	font-size: 0.8125rem;
+	line-height: 1.5rem;
+	text-underline-offset: 0.2em;
 }
 
 .site-nav a {
@@ -122,6 +137,7 @@ a {
 	padding-bottom: 0.875rem;
 	border-bottom: 2px solid var(--ink);
 	font-size: 1.125rem;
+	line-height: 1.5rem;
 }
 
 .search-controls {
@@ -137,6 +153,7 @@ a {
 	gap: 0.5rem;
 	font-size: 0.875rem;
 	font-weight: 650;
+	line-height: 1.5rem;
 }
 
 input,
@@ -160,6 +177,7 @@ textarea {
 	margin: 1.5rem 0 0.5rem;
 	color: var(--subtle);
 	font-size: 0.8125rem;
+	line-height: 1.25rem;
 }
 
 .faq-index {
@@ -214,6 +232,7 @@ textarea {
 	border-top: 1px solid var(--line);
 	border-bottom: 1px solid var(--line);
 	color: var(--muted);
+	line-height: 1.7;
 }
 
 .article-shell,
@@ -224,11 +243,17 @@ textarea {
 .breadcrumb {
 	margin: 0 0 2.5rem;
 	font-size: 0.875rem;
+	line-height: 1.5rem;
 }
 
 .breadcrumb a,
 .back-link {
 	text-underline-offset: 0.2em;
+}
+
+.back-link {
+	display: inline-block;
+	line-height: 1.5rem;
 }
 
 .article-header {
@@ -242,6 +267,7 @@ textarea {
 	margin-bottom: 0.75rem;
 	color: var(--subtle);
 	font-size: 0.8125rem;
+	line-height: 1.25rem;
 }
 
 .article-body {
@@ -257,6 +283,7 @@ textarea {
 	margin-top: 3rem;
 	padding-top: 1.5rem;
 	border-top: 1px solid var(--line);
+	line-height: 1.5rem;
 }
 
 .contact-form,
@@ -277,6 +304,7 @@ textarea {
 	color: #ffffff;
 	padding: 0.75rem 1.5rem;
 	font-weight: 700;
+	line-height: 1.5rem;
 	cursor: pointer;
 }
 
@@ -288,6 +316,7 @@ textarea {
 .form-error {
 	color: var(--error);
 	font-weight: 500;
+	line-height: 1.5rem;
 }
 
 .form-error {
@@ -299,6 +328,7 @@ textarea {
 	padding-left: 0.875rem;
 	border-left: 4px solid var(--accent);
 	font-weight: 700;
+	line-height: 1.5rem;
 }
 
 .receipt dl {
@@ -317,6 +347,7 @@ textarea {
 .receipt dt {
 	color: var(--subtle);
 	font-size: 0.8125rem;
+	line-height: 1.5rem;
 }
 
 .receipt dd {
@@ -350,6 +381,11 @@ textarea {
 
 	.site-nav {
 		gap: 1rem;
+	}
+
+	.header-links {
+		width: 100%;
+		justify-content: space-between;
 	}
 
 	.page-shell {

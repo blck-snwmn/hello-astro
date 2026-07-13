@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 動画に字幕はありますか
 category: 動画再生
 order: 17

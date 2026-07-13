@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 修了証はどこで確認できますか
 category: 学習履歴
 order: 10

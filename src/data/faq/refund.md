@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 支払い後に返金できますか
 category: 料金・支払い
 order: 15

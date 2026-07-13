@@ -3,6 +3,7 @@ import { z } from 'astro/zod';
 
 type Inquiry = {
 	id: string;
+	locale: 'en' | 'ja';
 	name: string;
 	subject: string;
 	message: string;
@@ -15,9 +16,10 @@ export const server = {
 	sendInquiry: defineAction({
 		accept: 'form',
 		input: z.object({
-			name: z.string().trim().min(1, 'お名前を入力してください。').max(50),
-			subject: z.string().trim().min(1, '件名を入力してください。').max(100),
-			message: z.string().trim().min(1, 'お問い合わせ内容を入力してください。').max(1000),
+			locale: z.enum(['en', 'ja']),
+			name: z.string().trim().min(1).max(50),
+			subject: z.string().trim().min(1).max(100),
+			message: z.string().trim().min(1).max(1000),
 		}),
 		handler: async (input) => {
 			const inquiry: Inquiry = {

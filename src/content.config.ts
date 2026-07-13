@@ -5,8 +5,9 @@ import { z } from 'astro/zod';
 const faq = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/data/faq' }),
 	schema: z.object({
+		locale: z.enum(['en', 'ja']),
 		title: z.string(),
-		category: z.enum(['アカウント', '講座', '学習履歴', '料金・支払い', '動画再生']),
+		category: z.string(),
 		order: z.number(),
 		keywords: z.array(z.string()),
 		summary: z.string(),

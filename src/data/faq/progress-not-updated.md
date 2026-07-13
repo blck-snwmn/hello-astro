@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 学習進捗が反映されません
 category: 学習履歴
 order: 8

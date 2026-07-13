@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: メールアドレスを変更できますか
 category: アカウント
 order: 2

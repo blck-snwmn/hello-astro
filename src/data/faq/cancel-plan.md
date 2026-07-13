@@ -1,4 +1,5 @@
 ---
+locale: ja
 title: 有料プランを解約するにはどうすればよいですか
 category: 料金・支払い
 order: 14
