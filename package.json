@@ -30,7 +30,7 @@
     "@astrojs/check": "0.9.6",
     "oxfmt": "0.56.0",
     "oxlint": "1.71.0",
-    "oxlint-tsgolint": "0.23.0",
+    "oxlint-tsgolint": "0.24.0",
     "typescript": "5.9.3",
     "wrangler": "^4.110.0"
   },
