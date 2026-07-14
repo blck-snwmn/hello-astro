@@ -11,14 +11,15 @@ const { locale } = Astro.props;
 const text = ui[locale];
 const result = Astro.getActionResult(actions.sendInquiry);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+const inquiriesPath = `/${locale}/inquiries`;
 ---
 
 <Layout title={`${text.contact} | ${text.siteName}`} locale={locale}>
 	<main class="page-shell contact-shell">
-		<p class="breadcrumb"><a href={`/${locale}/`}>{text.faq}</a> / {text.contact}</p>
 		<header class="page-header">
 			<h1>{text.contact}</h1>
 			<p>{text.contactLead}</p>
+			{!result?.data && <a href={inquiriesPath} class="inquiry-status-link">{text.viewInquiryStatus}</a>}
 		</header>
 
 		{result?.data ? (
@@ -31,7 +32,10 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 					<div><dt>{text.subject}</dt><dd>{result.data.subject}</dd></div>
 					<div><dt>{text.message}</dt><dd class="message">{result.data.message}</dd></div>
 				</dl>
-				<a href={`/${locale}/contact`} class="back-link">{text.back}</a>
+				<div class="receipt-actions">
+					<a href={inquiriesPath} class="primary-link-button">{text.viewInquiryStatus}</a>
+					<a href={`/${locale}/contact`} class="back-link">{text.back}</a>
+				</div>
 			</section>
 		) : (
 			<section aria-labelledby="form-heading">
