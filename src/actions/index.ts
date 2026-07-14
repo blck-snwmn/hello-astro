@@ -1,16 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro/zod";
-
-type Inquiry = {
-  id: string;
-  locale: "en" | "ja";
-  name: string;
-  subject: string;
-  message: string;
-  createdAt: Date;
-};
-
-const inquiries: Inquiry[] = [];
+import { encodeRecentInquiry, recentInquiryCookieName } from "../lib/recent-inquiry";
 
 export const server = {
   sendInquiry: defineAction({
@@ -21,14 +11,32 @@ export const server = {
       subject: z.string().trim().min(1).max(100),
       message: z.string().trim().min(1).max(1000),
     }),
-    handler: async (input) => {
-      const inquiry: Inquiry = {
+    handler: async (input, context) => {
+      const inquiry = {
         id: crypto.randomUUID(),
         ...input,
         createdAt: new Date(),
       };
 
-      inquiries.push(inquiry);
+      context.cookies.set(
+        recentInquiryCookieName,
+        encodeRecentInquiry({
+          id: inquiry.id,
+          name: inquiry.name,
+          subject: inquiry.subject,
+          message: inquiry.message,
+          status: "received",
+          createdAt: inquiry.createdAt.toISOString(),
+        }),
+        {
+          httpOnly: true,
+          sameSite: "lax",
+          secure: context.url.protocol === "https:",
+          path: "/",
+          maxAge: 60 * 60 * 24 * 30,
+        },
+      );
+
       console.info("Inquiry received", inquiry);
 
       return inquiry;

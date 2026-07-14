@@ -139,6 +139,124 @@ a {
   line-height: 1.5rem;
 }
 
+.recent-inquiry {
+  margin: -0.75rem 0 3.5rem;
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--accent);
+  background: var(--paper);
+  padding: 1.25rem 1.5rem;
+}
+
+.recent-inquiry-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.recent-inquiry-heading h2 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.inquiry-status {
+  color: var(--accent-dark);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.inquiry-summary {
+  margin: 0;
+}
+
+.inquiry-summary > div {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.inquiry-summary dt {
+  color: var(--subtle);
+  font-size: 0.8125rem;
+  line-height: 1.5rem;
+}
+
+.inquiry-summary dd {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.inquiry-message dd {
+  white-space: pre-wrap;
+}
+
+.inquiry-note,
+.inquiry-reference,
+.inquiry-empty,
+.recent-inquiry-fallback > p {
+  margin: 1rem 0 0;
+}
+
+.inquiry-note,
+.inquiry-reference,
+.recent-inquiry-fallback > p {
+  color: var(--subtle);
+  font-size: 0.8125rem;
+  line-height: 1.5rem;
+}
+
+.inquiry-reference {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  word-break: break-all;
+}
+
+.inquiry-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.cancel-inquiry-button {
+  border: 0;
+  background: transparent;
+  color: var(--error);
+  padding: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.cancel-inquiry-button:hover {
+  text-decoration-thickness: 2px;
+}
+
+.inquiry-empty {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  line-height: 1.7;
+}
+
+.inquiry-empty p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.inquiry-empty a {
+  flex: none;
+  text-underline-offset: 0.2em;
+}
+
 .search-controls {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 0.35fr);
@@ -235,7 +353,8 @@ textarea {
 }
 
 .article-shell,
-.contact-shell {
+.contact-shell,
+.inquiry-page-shell {
   max-width: 760px;
 }
 
@@ -253,6 +372,14 @@ textarea {
 .back-link {
   display: inline-block;
   line-height: 1.5rem;
+}
+
+.inquiry-status-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  text-underline-offset: 0.2em;
 }
 
 .article-header {
@@ -308,6 +435,28 @@ textarea {
 }
 
 .primary-button:hover {
+  background: var(--accent-dark);
+}
+
+.receipt-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.primary-link-button {
+  display: inline-block;
+  border: 1px solid var(--accent-dark);
+  border-radius: 3px;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  text-decoration: none;
+}
+
+.primary-link-button:hover {
   background: var(--accent-dark);
 }
 
@@ -400,8 +549,32 @@ textarea {
   }
 
   .faq-index li,
-  .receipt dl > div {
+  .receipt dl > div,
+  .inquiry-summary > div {
     grid-template-columns: 1fr;
     gap: 0.4rem;
+  }
+
+  .recent-inquiry {
+    margin-bottom: 2.5rem;
+    padding-inline: 1rem;
+  }
+
+  .inquiry-empty {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .inquiry-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .receipt-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }

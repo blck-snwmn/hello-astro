@@ -1,0 +1,50 @@
+---
+import { ui, type Locale } from '../i18n';
+import { decodeRecentInquiry, recentInquiryCookieName } from '../lib/recent-inquiry';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = ui[locale];
+const inquiry = decodeRecentInquiry(Astro.cookies.get(recentInquiryCookieName)?.value);
+const receivedAt = inquiry
+	? new Intl.DateTimeFormat(locale, {
+		dateStyle: 'medium',
+		timeStyle: 'short',
+		timeZone: 'Asia/Tokyo',
+	}).format(new Date(inquiry.createdAt))
+	: undefined;
+---
+
+<aside class="recent-inquiry" aria-labelledby="recent-inquiry-heading">
+	<div class="recent-inquiry-heading">
+		<h2 id="recent-inquiry-heading">{text.recentInquiry}</h2>
+		{inquiry && <span class="inquiry-status">{text.inquiryReceived}</span>}
+	</div>
+
+	{inquiry ? (
+		<>
+			<dl class="inquiry-summary">
+				<div><dt>{text.receivedAt}</dt><dd>{receivedAt}</dd></div>
+				<div><dt>{text.name}</dt><dd>{inquiry.name}</dd></div>
+				<div><dt>{text.subject}</dt><dd>{inquiry.subject}</dd></div>
+				<div class="inquiry-message"><dt>{text.message}</dt><dd>{inquiry.message}</dd></div>
+			</dl>
+			{inquiry.messageTruncated && <p class="inquiry-note">{text.truncatedInquiry}</p>}
+			<div class="inquiry-footer">
+				<p class="inquiry-reference">{inquiry.id}</p>
+				<form method="POST" action="/api/cancel-inquiry">
+					<input type="hidden" name="locale" value={locale} />
+					<button type="submit" class="cancel-inquiry-button">{text.cancelInquiry}</button>
+				</form>
+			</div>
+		</>
+	) : (
+		<div class="inquiry-empty">
+			<p>{text.noRecentInquiry}</p>
+			<a href={`/${locale}/contact`}>{text.sendInquiry}</a>
+		</div>
+	)}
+</aside>

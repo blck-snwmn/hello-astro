@@ -11,6 +11,8 @@ export default defineConfig({
     imageService: "compile",
   }),
 
+  // Prevent the Cloudflare adapter from automatically provisioning KV.
+  // This sample stores inquiry data only in a browser cookie.
   session: {
     driver: sessionDrivers.lruCache(),
   },

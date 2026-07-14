@@ -1,0 +1,30 @@
+---
+import RecentInquiry from '../RecentInquiry.astro';
+import Layout from '../../layouts/Layout.astro';
+import { ui, type Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = ui[locale];
+---
+
+<Layout title={`${text.inquiries} | ${text.siteName}`} locale={locale}>
+	<main class="page-shell inquiry-page-shell">
+		<header class="page-header">
+			<h1>{text.inquiriesTitle}</h1>
+			<p>{text.inquiriesLead}</p>
+		</header>
+
+		<RecentInquiry locale={locale} server:defer>
+			<aside slot="fallback" class="recent-inquiry recent-inquiry-fallback" aria-live="polite">
+				<div class="recent-inquiry-heading">
+					<h2>{text.recentInquiry}</h2>
+				</div>
+				<p>{text.checkingInquiry}</p>
+			</aside>
+		</RecentInquiry>
+	</main>
+</Layout>
