@@ -34,8 +34,8 @@ importers:
         version: 19.2.7(react@19.2.7)
     devDependencies:
       '@astrojs/check':
-        specifier: 0.9.6
-        version: 0.9.6(prettier@3.9.5)(typescript@5.9.3)
+        specifier: 0.9.9
+        version: 0.9.9(prettier@3.9.5)(typescript@5.9.3)
       oxfmt:
         specifier: 0.58.0
         version: 0.58.0
@@ -54,11 +54,11 @@ importers:
 
 packages:
 
-  '@astrojs/check@0.9.6':
-    resolution: {integrity: sha512-jlaEu5SxvSgmfGIFfNgcn5/f+29H61NJzEMfAZ82Xopr4XBchXB1GVlcJsE+elUlsYSbXlptZLX+JMG3b/wZEA==}
+  '@astrojs/check@0.9.9':
+    resolution: {integrity: sha512-A5UW8uIuErLWEoRQvzgXpO1gTjUFtK8r7nU2Z7GewAMxUb7bPvpk11qaKKgxqXlHJWlAvaaxy+Xg28A6bmQ1Tg==}
     hasBin: true
     peerDependencies:
-      typescript: ^5.0.0
+      typescript: ^5.0.0 || ^6.0.0
 
   '@astrojs/cloudflare@14.1.2':
     resolution: {integrity: sha512-JpRPG4dDkZcn+WRGL3tsjdzU7qDKxiR4IycX26MD1dI4ECYEr1AbdY9jQut0irI/4tBT02vvWZzkqF7X2QXX9g==}
@@ -2553,7 +2553,7 @@ packages:
 
 snapshots:
 
-  '@astrojs/check@0.9.6(prettier@3.9.5)(typescript@5.9.3)':
+  '@astrojs/check@0.9.9(prettier@3.9.5)(typescript@5.9.3)':
     dependencies:
       '@astrojs/language-server': 2.16.12(prettier@3.9.5)(typescript@5.9.3)
       chokidar: 4.0.3
